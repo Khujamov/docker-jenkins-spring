@@ -7,5 +7,11 @@ pipeline{
                  git 'https://github.com/Khujamov/docker-jenkins-spring.git'
              }
          }
+         stage("Build") {
+             steps{
+                 echo "Building the project"
+                 sh "mvn clean package"
+             }
+         }
      }
 }
