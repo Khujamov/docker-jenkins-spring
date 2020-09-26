@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "Maven" and add it to the path.
+        // Install the Dcoker version configured as "docker" and add it to the path.
+        maven 'Maven'
+        dockerTool 'docker'
+    }
+
+    stages {
+        stage('Compile and Build using Maven') {
+            steps {
+                sh 'mvn -v'
+                sh 'mvn clean package'
+            }
+        }
+        
+        stage('Build Docker image') {
+            steps {
+                sh 'docker --version'
+                // . -->  means current Dockerfile
+                sh 'docker build -t 03111999/my-app .'
+            }
+        }
+    }
+    
+    post {
+        success {
+           echo 'Successfully build Docker image'
+         }
+    }
+}
